@@ -365,69 +365,83 @@ export default function App() {
 
       {/* Add / Edit Player Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="glass-card w-full max-w-sm p-5 border-purple-500/30 relative shadow-[0_0_40px_rgba(112,0,255,0.2)]">
+        <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/70 backdrop-blur-md">
+          <div className="glass-card w-full sm:max-w-md p-6 sm:p-8 border-t border-purple-500/40 sm:border rounded-t-[2.5rem] sm:rounded-[2rem] relative shadow-[0_-20px_50px_rgba(112,0,255,0.15)] sm:shadow-[0_0_50px_rgba(112,0,255,0.2)] animate-in slide-in-from-bottom-8 sm:slide-in-from-bottom-0 sm:zoom-in-95 duration-300">
             <button 
               onClick={closeModal}
-              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+              className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4" />
             </button>
 
-            <h2 className="text-xl font-bold text-white mb-6">
-              {slots.find(s => s.id === editingSlotId)?.isFilled ? 'Edit Player' : 'Add Player'}
-            </h2>
+            <div className="mb-8 pr-10">
+              <h2 className="text-2xl font-extrabold text-white tracking-tight mb-1">
+                {slots.find(s => s.id === editingSlotId)?.isFilled ? 'Edit Player' : 'Add Player'}
+              </h2>
+              <p className="text-xs font-medium text-purple-400">
+                {slots.find(s => s.id === editingSlotId)?.isFilled ? 'Update squad member details' : 'Add purchased player to your squad'}
+              </p>
+            </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
                   Player Name
                 </label>
                 <input
                   type="text"
                   autoFocus
-                  className="w-full bg-black/40 border border-white/10 rounded-lg py-3 px-4 text-white font-semibold focus:outline-none focus:border-purple-500/50 transition-colors"
-                  placeholder="e.g. Rahul Sharma"
+                  className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-5 text-white text-lg font-semibold placeholder:text-gray-600 focus:outline-none focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                  placeholder="Enter player name"
                   value={modalName}
                   onChange={(e) => setModalName(e.target.value)}
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
                   Role
                 </label>
-                <select
-                  className="w-full bg-black/40 border border-white/10 rounded-lg py-3 px-4 text-white font-semibold focus:outline-none focus:border-purple-500/50 transition-colors appearance-none"
-                  value={modalRole}
-                  onChange={(e) => setModalRole(e.target.value as Role)}
-                >
-                  <option value="Batter">Batter</option>
-                  <option value="Bowler">Bowler</option>
-                  <option value="All Rounder">All Rounder</option>
-                  <option value="Wicket Keeper">Wicket Keeper</option>
-                </select>
+                <div className="relative">
+                  <select
+                    className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 pl-5 pr-12 text-white text-lg font-semibold focus:outline-none focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all appearance-none cursor-pointer"
+                    value={modalRole}
+                    onChange={(e) => setModalRole(e.target.value as Role)}
+                  >
+                    <option value="Batter">Batter</option>
+                    <option value="Bowler">Bowler</option>
+                    <option value="All Rounder">All Rounder</option>
+                    <option value="Wicket Keeper">Wicket Keeper</option>
+                  </select>
+                  <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500">
+                    <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-2 ml-1">
                   Amount Spent (₹)
                 </label>
                 <input
                   type="text"
-                  className="w-full bg-black/40 border border-white/10 rounded-lg py-3 px-4 text-white font-semibold focus:outline-none focus:border-purple-500/50 transition-colors"
-                  placeholder="e.g. 2000000"
+                  className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-5 text-white text-lg font-semibold placeholder:text-gray-600 focus:outline-none focus:border-purple-500/60 focus:ring-2 focus:ring-purple-500/20 transition-all"
+                  placeholder="Enter amount spent"
                   value={modalAmount}
                   onChange={(e) => setModalAmount(e.target.value)}
                 />
               </div>
 
-              <button 
-                onClick={savePlayer}
-                className="btn-primary w-full mt-2"
-              >
-                Save Player
-              </button>
+              <div className="pt-4 pb-2">
+                <button 
+                  onClick={savePlayer}
+                  className="btn-primary w-full py-4 text-lg font-bold shadow-[0_0_30px_rgba(112,0,255,0.3)] hover:shadow-[0_0_40px_rgba(112,0,255,0.5)] transition-all"
+                >
+                  {slots.find(s => s.id === editingSlotId)?.isFilled ? 'Update Player' : 'Add To Squad'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
