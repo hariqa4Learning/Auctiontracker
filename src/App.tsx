@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { 
   Trophy, Menu, Wallet, ArrowDownToLine, Coins, Users,
-  Pencil, Trash2, Plus, Activity, LayoutGrid, Shield, X
+  Pencil, Trash2, Plus, LayoutGrid, Shield, X
 } from 'lucide-react';
 import './index.css';
 
